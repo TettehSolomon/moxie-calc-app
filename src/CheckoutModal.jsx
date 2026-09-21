@@ -105,7 +105,7 @@ export default function CheckoutModal({
       >
         {/* Titlebar */}
         <div className="flex items-center justify-between bg-moxie text-white px-4 py-3 rounded-t-xl sticky top-0">
-          <h2 className="font-bold">Confirm your order</h2>
+          <h2 className="font-bold">Checkout Output</h2>
           <button
             onClick={onClose}
             aria-label="Close"
@@ -272,6 +272,8 @@ export default function CheckoutModal({
               </p>
 
               {/* When the form is hidden, keep a Place Order action + the hook */}
+  
+              {/* Hide BUTTONS
               {!SHOW_FORM && (
                 <div className="mt-4 flex justify-end gap-2">
                   <button
@@ -288,6 +290,7 @@ export default function CheckoutModal({
                   </button>
                 </div>
               )}
+              */}
             </div>
           </div>
         )}
