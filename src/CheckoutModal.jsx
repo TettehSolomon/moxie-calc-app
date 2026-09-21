@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { naira, cell, cellHead } from './utils.js'
 import { CHECKOUT_CHANNELS } from './config.js'
 
+/* Show/hide the customer details form in the checkout popup.
+   false = popup shows only the order breakdown table (full width).
+   Flip to true when the boss wants to collect customer details again. */
+const SHOW_FORM = false
+
 /* Form field style — mirrors the live app's .form-control inputs
    (full width, 8px bottom spacing, light border). */
 const fieldClass =
@@ -126,8 +131,9 @@ export default function CheckoutModal({
             </button>
           </div>
         ) : (
-          <div className="p-4 sm:p-5 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {/* Left: customer form */}
+          <div className={'p-4 sm:p-5 ' + (SHOW_FORM ? 'grid grid-cols-1 md:grid-cols-3 gap-5' : '')}>
+            {/* Left: customer form (hidden when SHOW_FORM is false) */}
+            {SHOW_FORM && (
             <form onSubmit={handleSubmit} className="md:col-span-1">
               <input
                 required
@@ -207,21 +213,23 @@ export default function CheckoutModal({
                 Place Order
               </button>
             </form>
+            )}
 
-            {/* Right: order breakdown — mirrors the live #displaytable */}
-            <div className="md:col-span-2">
-              <div className="overflow-auto rounded-md" style={{ border: '1px solid #ddd' }}>
+            {/* Order breakdown — mirrors the live #displaytable.
+                Spans full width when the form is hidden. */}
+            <div className={SHOW_FORM ? 'md:col-span-2' : ''}>
+              <div className="overflow-x-auto rounded-md" style={{ border: '1px solid #ddd' }}>
                 <table
-                  className="w-full text-[12px] sm:text-[13px] md:text-sm"
-                  style={{ borderCollapse: 'collapse' }}
+                  className="text-[12px] sm:text-[13px] md:text-sm"
+                  style={{ borderCollapse: 'collapse', width: '100%', minWidth: '520px' }}
                 >
                   <thead>
                     <tr>
-                      <th className="text-left font-bold" style={cellHead}>SN</th>
-                      <th className="text-left font-bold" style={cellHead}>Product</th>
-                      <th className="text-right font-bold" style={cellHead}>Price (₦)</th>
-                      <th className="text-center font-bold" style={cellHead}>Qty</th>
-                      <th className="text-right font-bold" style={cellHead}>Amount (₦)</th>
+                      <th className="text-left font-bold whitespace-nowrap" style={cellHead}>SN</th>
+                      <th className="text-left font-bold whitespace-nowrap" style={cellHead}>Product</th>
+                      <th className="text-right font-bold whitespace-nowrap" style={cellHead}>Price (₦)</th>
+                      <th className="text-center font-bold whitespace-nowrap" style={cellHead}>Qty</th>
+                      <th className="text-right font-bold whitespace-nowrap" style={cellHead}>Amount (₦)</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -232,7 +240,7 @@ export default function CheckoutModal({
                         style={{ backgroundColor: i % 2 === 1 ? '#fafafa' : '#fff' }}
                       >
                         <td style={cell}>{i + 1}</td>
-                        <td style={cell}>{r.name}</td>
+                        <td className="whitespace-nowrap" style={cell}>{r.name}</td>
                         <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
                           {naira(r.price)}
                         </td>
@@ -262,6 +270,24 @@ export default function CheckoutModal({
               <p className="text-right text-lg font-bold mt-3">
                 Total Amount: {naira(totalAmount)}
               </p>
+
+              {/* When the form is hidden, keep a Place Order action + the hook */}
+              {!SHOW_FORM && (
+                <div className="mt-4 flex justify-end gap-2">
+                  <button
+                    onClick={onClose}
+                    className="px-5 py-2 rounded-md border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={handleSubmit}
+                    className="px-5 py-2 rounded-md bg-moxie text-white font-semibold hover:opacity-90"
+                  >
+                    Place Order
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
