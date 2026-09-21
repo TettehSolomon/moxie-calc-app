@@ -1,6 +1,12 @@
 /* Small helpers shared across components.
    You normally do NOT need to edit this file — pricing/promo lives in config.js. */
 
+/* Table cell styles that mirror the live Moxie app
+   (1px #ddd borders, 8px 10px padding, #f0f0f0 header).
+   Shared by the main products table and the checkout popup table. */
+export const cell = { border: '1px solid #ddd', padding: '8px 10px', verticalAlign: 'middle' }
+export const cellHead = { ...cell, backgroundColor: '#f0f0f0' }
+
 // Format a number as Naira, e.g. 40560 -> "₦40,560.00"
 export function naira(amount) {
   return '₦' + Number(amount || 0).toLocaleString('en-US', {

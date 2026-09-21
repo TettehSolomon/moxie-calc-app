@@ -1,6 +1,12 @@
 import { useState } from 'react'
-import { naira } from './utils.js'
+import { naira, cell, cellHead } from './utils.js'
 import { CHECKOUT_CHANNELS } from './config.js'
+
+/* Form field style — mirrors the live app's .form-control inputs
+   (full width, 8px bottom spacing, light border). */
+const fieldClass =
+  'w-full rounded-md border border-gray-300 px-3 py-2 text-sm mb-2 ' +
+  'focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none'
 
 /* ============================================================================
  *  CHECKOUT POPUP
@@ -122,10 +128,10 @@ export default function CheckoutModal({
         ) : (
           <div className="p-4 sm:p-5 grid grid-cols-1 md:grid-cols-3 gap-5">
             {/* Left: customer form */}
-            <form onSubmit={handleSubmit} className="md:col-span-1 space-y-2">
+            <form onSubmit={handleSubmit} className="md:col-span-1">
               <input
                 required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none"
+                className={fieldClass}
                 placeholder="Enter your name"
                 value={form.customername}
                 onChange={(e) => update('customername', e.target.value)}
@@ -133,14 +139,14 @@ export default function CheckoutModal({
               <textarea
                 required
                 rows="3"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none"
+                className={fieldClass}
                 placeholder="Enter your delivery address"
                 value={form.customeraddress}
                 onChange={(e) => update('customeraddress', e.target.value)}
               />
               <input
                 required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none"
+                className={fieldClass}
                 placeholder="Enter your phone number"
                 value={form.customerphone}
                 onChange={(e) => update('customerphone', e.target.value)}
@@ -148,7 +154,7 @@ export default function CheckoutModal({
               <input
                 required
                 type="email"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none"
+                className={fieldClass}
                 placeholder="Enter your email address"
                 value={form.customeremail}
                 onChange={(e) => update('customeremail', e.target.value)}
@@ -157,7 +163,7 @@ export default function CheckoutModal({
               {/* Procurement channel */}
               <select
                 required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white focus:border-moxie focus:ring-2 focus:ring-moxie-accent/40 outline-none"
+                className={fieldClass + ' bg-white'}
                 value={form.channel_option}
                 onChange={(e) => update('channel_option', e.target.value)}
               >
@@ -171,11 +177,11 @@ export default function CheckoutModal({
 
               {/* "Others" free-text rows */}
               {showOthers && (
-                <div className="space-y-1.5">
+                <div>
                   {otherChannels.map((val, i) => (
                     <input
                       key={i}
-                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-moxie"
+                      className={fieldClass}
                       value={val}
                       onChange={(e) => {
                         const next = [...otherChannels]
@@ -187,7 +193,7 @@ export default function CheckoutModal({
                   <button
                     type="button"
                     onClick={() => setOtherChannels((p) => [...p, ''])}
-                    className="text-xs rounded-full bg-gray-200 hover:bg-gray-300 px-3 py-1"
+                    className="text-xs rounded-full bg-gray-200 hover:bg-gray-300 px-3 py-1 mb-2"
                   >
                     + click to add more channels
                   </button>
@@ -202,27 +208,38 @@ export default function CheckoutModal({
               </button>
             </form>
 
-            {/* Right: order breakdown */}
+            {/* Right: order breakdown — mirrors the live #displaytable */}
             <div className="md:col-span-2">
-              <div className="overflow-x-auto rounded-lg border border-gray-200">
-                <table className="w-full text-sm">
+              <div className="overflow-auto rounded-md" style={{ border: '1px solid #ddd' }}>
+                <table
+                  className="w-full text-[12px] sm:text-[13px] md:text-sm"
+                  style={{ borderCollapse: 'collapse' }}
+                >
                   <thead>
-                    <tr className="bg-gray-100 text-gray-700">
-                      <th className="text-left px-3 py-2">SN</th>
-                      <th className="text-left px-3 py-2">Product</th>
-                      <th className="text-right px-3 py-2">Price (₦)</th>
-                      <th className="text-center px-3 py-2">Qty</th>
-                      <th className="text-right px-3 py-2">Amount (₦)</th>
+                    <tr>
+                      <th className="text-left font-bold" style={cellHead}>SN</th>
+                      <th className="text-left font-bold" style={cellHead}>Product</th>
+                      <th className="text-right font-bold" style={cellHead}>Price (₦)</th>
+                      <th className="text-center font-bold" style={cellHead}>Qty</th>
+                      <th className="text-right font-bold" style={cellHead}>Amount (₦)</th>
                     </tr>
                   </thead>
                   <tbody>
                     {items.map((r, i) => (
-                      <tr key={r.id} className="border-t border-gray-100">
-                        <td className="px-3 py-2">{i + 1}</td>
-                        <td className="px-3 py-2">{r.name}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">{naira(r.price)}</td>
-                        <td className="px-3 py-2 text-center">{r.qty}</td>
-                        <td className="px-3 py-2 text-right tabular-nums">{naira(r.amount)}</td>
+                      <tr
+                        key={r.id}
+                        className="moxie-row"
+                        style={{ backgroundColor: i % 2 === 1 ? '#fafafa' : '#fff' }}
+                      >
+                        <td style={cell}>{i + 1}</td>
+                        <td style={cell}>{r.name}</td>
+                        <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
+                          {naira(r.price)}
+                        </td>
+                        <td style={{ ...cell, textAlign: 'center' }}>{r.qty}</td>
+                        <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
+                          {naira(r.amount)}
+                        </td>
                       </tr>
                     ))}
 
@@ -231,7 +248,8 @@ export default function CheckoutModal({
                       <tr>
                         <td
                           colSpan="5"
-                          className="px-3 py-2 text-right font-bold text-moxie bg-moxie-accent/10"
+                          className="text-right font-bold text-moxie bg-moxie-accent/10"
+                          style={cell}
                         >
                           {promoMessage}
                         </td>

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { naira, computePromo } from './utils.js'
+import { naira, computePromo, cell, cellHead } from './utils.js'
 import CheckoutModal from './CheckoutModal.jsx'
 
 export default function Calculator({ mode }) {
@@ -140,12 +140,6 @@ export default function Calculator({ mode }) {
     </div>
   )
 }
-
-/* Cell styles that mirror the live app's table
-   (1px #ddd borders, 8px 10px padding). Kept as inline styles so the exact
-   look survives regardless of Tailwind resets. */
-const cell = { border: '1px solid #ddd', padding: '8px 10px', verticalAlign: 'middle' }
-const cellHead = { ...cell, backgroundColor: '#f0f0f0' }
 
 /* Reusable quantity input */
 function QtyInput({ value, disabled, onChange }) {
