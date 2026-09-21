@@ -46,77 +46,54 @@ export default function Calculator({ mode }) {
         </p>
       )}
 
-      {/* ---------- Products table (desktop) ---------- */}
-      <div className="hidden md:block overflow-x-auto rounded-lg border border-gray-200 bg-white">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700">
-              <th className="text-left font-bold px-4 py-3">Product</th>
-              <th className="text-left font-bold px-4 py-3">Packaging</th>
-              <th className="text-right font-bold px-4 py-3">Unit Price (₦)</th>
-              <th className="text-center font-bold px-4 py-3">Quantity</th>
-              <th className="text-right font-bold px-4 py-3">Amount (₦)</th>
+      {/* ---------- Products table ----------
+           Mirrors the live Moxie app: a single real table that scrolls
+           horizontally on small screens (NO card layout), sticky header,
+           1px #ddd cell borders, zebra striping, and purple row hover.
+           Scroll container matches the live `overflow:auto; max-height:60vh`. */}
+      <div
+        className="overflow-auto rounded-md"
+        style={{ maxHeight: '60vh', border: '1px solid #ddd' }}
+      >
+        <table
+          className="w-full text-[12px] sm:text-[13px] md:text-sm"
+          style={{ borderCollapse: 'collapse' }}
+        >
+          <thead className="sticky top-0 z-10">
+            <tr>
+              <th className="text-left font-bold" style={cellHead}>Product</th>
+              <th className="text-left font-bold" style={cellHead}>Packaging</th>
+              <th className="text-right font-bold" style={cellHead}>Unit Price (₦)</th>
+              <th className="text-center font-bold" style={cellHead}>Quantity</th>
+              <th className="text-right font-bold" style={cellHead}>Amount (₦)</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
+            {rows.map((r, i) => (
               <tr
                 key={r.id}
-                className={
-                  'border-t border-gray-100 ' +
-                  (r.active ? 'hover:bg-moxie-accent/10' : 'bg-gray-50 text-gray-400')
-                }
+                className={r.active ? 'moxie-row' : 'text-gray-400'}
+                style={{ backgroundColor: i % 2 === 1 ? '#fafafa' : '#fff' }}
               >
-                <td className="px-4 py-3">{r.name}</td>
-                <td className="px-4 py-3">{mode.packaging}</td>
-                <td className="px-4 py-3 text-right tabular-nums">
+                <td style={cell}>{r.name}</td>
+                <td style={cell}>{mode.packaging}</td>
+                <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
                   {naira(r.price).replace('₦', '')}
                 </td>
-                <td className="px-4 py-3 text-center">
+                <td style={{ ...cell, textAlign: 'center' }}>
                   <QtyInput
                     value={quantities[r.id] ?? ''}
                     disabled={!r.active}
                     onChange={(v) => setQty(r.id, v)}
                   />
                 </td>
-                <td className="px-4 py-3 text-right tabular-nums">{naira(r.amount)}</td>
+                <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
+                  {naira(r.amount)}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-
-      {/* ---------- Products cards (mobile) ---------- */}
-      <div className="md:hidden space-y-3">
-        {rows.map((r) => (
-          <div
-            key={r.id}
-            className={
-              'rounded-lg border p-4 ' +
-              (r.active
-                ? 'border-gray-200 bg-white'
-                : 'border-gray-200 bg-gray-50 text-gray-400')
-            }
-          >
-            <div className="font-semibold mb-1">{r.name}</div>
-            <div className="text-xs text-gray-500 mb-3">{mode.packaging}</div>
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-sm">
-                <div className="text-gray-500">Unit Price</div>
-                <div className="font-medium tabular-nums">{naira(r.price)}</div>
-              </div>
-              <QtyInput
-                value={quantities[r.id] ?? ''}
-                disabled={!r.active}
-                onChange={(v) => setQty(r.id, v)}
-              />
-              <div className="text-sm text-right">
-                <div className="text-gray-500">Amount</div>
-                <div className="font-semibold tabular-nums">{naira(r.amount)}</div>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* ---------- Order summary + promo (matches #ordersummary / #promoline) ---------- */}
@@ -163,6 +140,12 @@ export default function Calculator({ mode }) {
     </div>
   )
 }
+
+/* Cell styles that mirror the live app's table
+   (1px #ddd borders, 8px 10px padding). Kept as inline styles so the exact
+   look survives regardless of Tailwind resets. */
+const cell = { border: '1px solid #ddd', padding: '8px 10px', verticalAlign: 'middle' }
+const cellHead = { ...cell, backgroundColor: '#f0f0f0' }
 
 /* Reusable quantity input */
 function QtyInput({ value, disabled, onChange }) {

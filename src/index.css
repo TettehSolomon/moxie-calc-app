@@ -18,6 +18,12 @@ body {
   color: #333;
 }
 
+/* Purple row hover, mirroring the live Moxie table (#f5eaff) */
+.moxie-row:hover {
+  background-color: #f5eaff !important;
+  transition: background-color 0.2s ease-in-out;
+}
+
 /* Hide number-input spinners for a cleaner look */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
