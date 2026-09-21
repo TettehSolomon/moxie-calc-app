@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Moxie brand theme tokens (used across the app).
+   Change the two brand colours here if the brand palette ever changes. */
+@theme {
+  --color-moxie: #48037B;        /* deep purple  */
+  --color-moxie-accent: #CA80ED; /* light purple */
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f6f6f6;
+  color: #333;
+}
+
+/* Hide number-input spinners for a cleaner look */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
