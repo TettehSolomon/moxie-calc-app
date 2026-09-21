@@ -220,8 +220,8 @@ export default function CheckoutModal({
             <div className={SHOW_FORM ? 'md:col-span-2' : ''}>
               <div className="overflow-x-auto rounded-md" style={{ border: '1px solid #ddd' }}>
                 <table
-                  className="text-[12px] sm:text-[13px] md:text-sm"
-                  style={{ borderCollapse: 'collapse', width: '100%', minWidth: '520px' }}
+                  className="w-full min-w-0 md:min-w-[520px] text-[12px] sm:text-[13px] md:text-sm"
+                  style={{ borderCollapse: 'collapse' }}
                 >
                   <thead>
                     <tr>
@@ -240,7 +240,7 @@ export default function CheckoutModal({
                         style={{ backgroundColor: i % 2 === 1 ? '#fafafa' : '#fff' }}
                       >
                         <td style={cell}>{i + 1}</td>
-                        <td className="whitespace-nowrap" style={cell}>{r.name}</td>
+                        <td className="whitespace-normal md:whitespace-nowrap" style={cell}>{r.name}</td>
                         <td className="tabular-nums" style={{ ...cell, textAlign: 'right' }}>
                           {naira(r.price)}
                         </td>
