@@ -220,7 +220,7 @@ export default function CheckoutModal({
             <div className={SHOW_FORM ? 'md:col-span-2' : ''}>
               <div className="overflow-x-auto rounded-md" style={{ border: '1px solid #ddd' }}>
                 <table
-                  className="w-full min-w-0 md:min-w-[520px] text-[12px] sm:text-[13px] md:text-sm"
+                  className="popup-table w-full min-w-0 md:min-w-[520px] text-[12px] sm:text-[13px] md:text-sm"
                   style={{ borderCollapse: 'collapse' }}
                 >
                   <thead>

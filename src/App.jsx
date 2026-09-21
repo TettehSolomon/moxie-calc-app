@@ -11,9 +11,8 @@ export default function App() {
       <header className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center justify-center rounded-full bg-moxie-accent/30 px-3 py-1">
-              <span className="text-moxie font-extrabold italic text-lg tracking-tight">Moxie</span>
-            </span>
+            {/* Logo lives in public/logo.webp — swap that file to change it */}
+            <img src="./logo.webp" alt="Moxie" className="h-9 w-auto" />
             <span className="hidden sm:inline text-sm text-gray-500">Order Calculator</span>
           </div>
 

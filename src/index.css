@@ -18,6 +18,17 @@ body {
   color: #333;
 }
 
+/* Checkout popup table: tighter cell padding on mobile so columns fit;
+   restores the full 8px/10px padding on laptop (>=768px). */
+.popup-table th, .popup-table td {
+  padding: 4px 6px !important;
+}
+@media (min-width: 768px) {
+  .popup-table th, .popup-table td {
+    padding: 8px 10px !important;
+  }
+}
+
 /* Purple row hover, mirroring the live Moxie table (#f5eaff) */
 .moxie-row:hover {
   background-color: #f5eaff !important;
