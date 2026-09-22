@@ -122,7 +122,7 @@ export default function Calculator({ mode }) {
               : 'bg-gray-300 cursor-not-allowed')
           }
         >
-          Checkout
+          View
         </button>
       </div>
 

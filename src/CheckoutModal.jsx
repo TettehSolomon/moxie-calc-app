@@ -105,7 +105,7 @@ export default function CheckoutModal({
       >
         {/* Titlebar */}
         <div className="flex items-center justify-between bg-moxie text-white px-4 py-3 rounded-t-xl sticky top-0">
-          <h2 className="font-bold">Checkout Output</h2>
+          <h2 className="font-bold">Output</h2>
           <button
             onClick={onClose}
             aria-label="Close"

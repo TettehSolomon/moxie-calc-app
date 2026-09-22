@@ -60,10 +60,7 @@ export const MODES = {
       { id: 1, name: 'MOXIE PARACETAMOL SUSPENSION', price: 40560, active: true },
       { id: 2, name: 'MOXIE VITAMIN C SYRUP',        price: 38160, active: true },
       { id: 3, name: 'MOXIE LORATADINE SYRUP',       price: 48000, active: true },
-      { id: 4, name: 'MOXIE CHLORPHENIRAMINE SYRUP', price: 36240, active: true },
-      // active:false = shown but greyed out / not orderable (no price yet)
-      { id: 5, name: 'MOXIE CHESTY COUGH MIXTURE',   price: 0,     active: false },
-      { id: 6, name: 'MOXIE SALINE NASAL SPRAY',     price: 0,     active: false },
+      { id: 4, name: 'MOXIE CHLORPHENIRAMINE SYRUP', price: 36240, active: true }
     ],
   },
 
@@ -87,9 +84,7 @@ export const MODES = {
       { id: 1, name: 'MOXIE PARACETAMOL SUSPENSION', price: 1760, active: true },
       { id: 2, name: 'MOXIE VITAMIN C SYRUP',        price: 1650, active: true },
       { id: 3, name: 'MOXIE LORATADINE SYRUP',       price: 2100, active: true },
-      { id: 4, name: 'MOXIE CHLORPHENIRAMINE SYRUP', price: 1585, active: true },
-      { id: 5, name: 'MOXIE CHESTY COUGH MIXTURE',   price: 0,    active: false },
-      { id: 6, name: 'MOXIE SALINE NASAL SPRAY',     price: 0,    active: false },
+      { id: 4, name: 'MOXIE CHLORPHENIRAMINE SYRUP', price: 1585, active: true }
     ],
   },
 };

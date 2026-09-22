@@ -13,7 +13,6 @@ export default function App() {
           <div className="flex items-center gap-2">
             {/* Logo lives in public/logo.webp — swap that file to change it */}
             <img src="./logo.webp" alt="Moxie" className="h-9 w-auto" />
-            <span className="hidden sm:inline text-sm text-gray-500">Order Calculator</span>
           </div>
 
           {/* Retail / Wholesale switcher */}
